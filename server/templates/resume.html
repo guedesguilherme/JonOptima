@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Resume</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 1.5cm;
+        }
+
+        body {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            font-size: 11pt;
+            line-height: 1.3;
+            color: #000000;
+            background: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            font-size: 16pt;
+            font-weight: bold;
+            text-align: center;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            margin-top: 0;
+            color: #000000;
+        }
+
+        .contact-info {
+            text-align: center;
+            font-size: 10pt;
+            margin-bottom: 20px;
+        }
+
+        .contact-info span {
+            white-space: nowrap;
+        }
+
+        h2 {
+            font-size: 12pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-bottom: 2px solid #000000;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            padding-bottom: 2px;
+            color: #000000;
+        }
+
+        .section {
+            margin-bottom: 15px;
+        }
+
+        .item {
+            margin-bottom: 10px;
+            page-break-inside: avoid;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .company {
+            font-weight: bold;
+        }
+
+        .role {
+            font-style: italic;
+        }
+
+        .date {
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        ul {
+            margin-top: 4px;
+            margin-bottom: 5px;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 2px;
+        }
+
+        a {
+            color: #000000;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <h1>{{ data.contact_info.name }}</h1>
+    <div class="contact-info">
+        <span>{{ data.contact_info.email }}</span> |
+        <span>{{ data.contact_info.phone }}</span>
+        {% if data.contact_info.linkedin %} | <span>{{ data.contact_info.linkedin }}</span>{% endif %}
+        {% if data.contact_info.github %} | <span>{{ data.contact_info.github }}</span>{% endif %}
+        {% if data.contact_info.portfolio_url %} | <span>{{ data.contact_info.portfolio_url }}</span>{% endif %}
+    </div>
+
+    <!-- Summary -->
+    {% if data.summary %}
+    <div class="section">
+        <h2>Professional Summary</h2>
+        <p style="margin: 0;">{{ data.summary }}</p>
+    </div>
+    {% endif %}
+
+    <!-- Experience -->
+    <div class="section">
+        <h2>Experience</h2>
+        {% for job in data.experience %}
+        <div class="item">
+            <div class="row">
+                <div class="company">{{ job.company }}</div>
+                <!-- Location placeholder if needed in future -->
+                <div></div>
+            </div>
+            <div class="row">
+                <div class="role">{{ job.role }}</div>
+                <div class="date">{{ job.start_date }} - {{ 'Present' if job.is_current else job.end_date }}</div>
+            </div>
+            <ul>
+                {% for point in job.description_points %}
+                <li>{{ point }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Education -->
+    <div class="section">
+        <h2>Education</h2>
+        {% for school in data.education %}
+        <div class="item">
+            <div class="row">
+                <div class="company">{{ school.institution }}</div>
+                <div></div>
+            </div>
+            <div class="row">
+                <div class="role">{{ school.degree }}</div>
+                <div class="date">{{ school.year }}</div>
+            </div>
+            {% if school.details %}
+            <div style="font-size: 10pt;">{{ school.details }}</div>
+            {% endif %}
+            {% if school.description %}
+            <div style="font-size: 10pt; font-style: italic;">{{ school.description }}</div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Skills -->
+    <div class="section">
+        <h2>Skills</h2>
+        <ul style="list-style: none; padding-left: 0;">
+            {% for skill in data.skills %}
+            <li>
+                <strong>{{ skill.category }}:</strong> {{ skill.items | join(', ') }}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+
+</html>
