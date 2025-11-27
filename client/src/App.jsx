@@ -56,7 +56,7 @@ function App() {
     const processedData = processData(data);
 
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/generate-preview', processedData, {
+      const response = await axios.post('https://jonoptima-api.onrender.com/api/generate-preview', processedData, {
         responseType: 'blob',
       });
 
@@ -84,7 +84,7 @@ function App() {
     const processedData = processData(currentData);
 
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/tailor-cv', {
+      const response = await axios.post('https://jonoptima-api.onrender.com/api/tailor-cv', {
         profile_data: processedData,
         job_description: jobDescription
       });
@@ -162,7 +162,7 @@ function App() {
                 className="w-full bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-400 hover:to-blue-500 text-white font-bold py-4 px-6 rounded-lg shadow-lg transform hover:scale-[1.02] transition-all duration-200 text-lg flex items-center justify-center gap-2"
               >
                 <Sparkles size={24} />
-                 Tailor with JonOptima AI
+                Tailor with JonOptima AI
               </button>
             </div>
           </div>
