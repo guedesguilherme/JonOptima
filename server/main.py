@@ -9,11 +9,14 @@ import base64
 
 app = FastAPI()
 
-# --- CORS CONFIGURATION ---
-# This allows your React app (running on a different port) to talk to this API
+origins = [
+    "http://localhost:5173",
+    "https://jon-optima.vercel.app/", 
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # In production, we would change this to the frontend URL only
+    allow_origins=origins, 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
