@@ -1,11 +1,14 @@
-# Use specific version to avoid breaking changes (Debian Bullseye is very stable for WeasyPrint)
-FROM python:3.9-slim-bullseye
+# server/Dockerfile
+
+# UPGRADE to Python 3.11 to match your requirements.txt
+# We keep "bullseye" to ensure the apt-get packages below still work
+FROM python:3.11-slim-bullseye
 
 # Set working directory
 WORKDIR /app
 
 # Install system dependencies for WeasyPrint
-# Note: explicit package names for Debian 11 (Bullseye)
+# (These names are specific to Debian Bullseye)
 RUN apt-get update && apt-get install -y \
     build-essential \
     python3-dev \
@@ -20,7 +23,7 @@ RUN apt-get update && apt-get install -y \
     shared-mime-info \
     && rm -rf /var/lib/apt/lists/*
 
-# Upgrade pip to ensure no installation errors
+# Upgrade pip
 RUN pip install --upgrade pip
 
 # Copy requirements and install
