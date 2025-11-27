@@ -56,7 +56,8 @@ function App() {
     const processedData = processData(data);
 
     try {
-      const response = await axios.post('https://jonoptima-api.onrender.com/api/generate-preview', processedData, {
+      const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
+      const response = await axios.post(`${API_URL}/api/generate-preview`, processedData, {
         responseType: 'blob',
       });
 
@@ -84,7 +85,8 @@ function App() {
     const processedData = processData(currentData);
 
     try {
-      const response = await axios.post('https://jonoptima-api.onrender.com/api/tailor-cv', {
+      const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
+      const response = await axios.post(`${API_URL}/api/tailor-cv`, {
         profile_data: processedData,
         job_description: jobDescription
       });
