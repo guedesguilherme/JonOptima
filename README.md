@@ -66,7 +66,7 @@ Supports Linux dependencies like **Cairo** and **Pango** required for PDF render
 
 ### **Backend (The Brain)**
 - FastAPI (Python 3.9)  
-- Gemini 1.5 Flash  
+- Gemini 2.5 Flash  
 - Jinja2 Templates  
 - WeasyPrint  
 - Docker + Render  
@@ -244,7 +244,7 @@ Inclui dependências como **Cairo** e **Pango** para geração de PDF.
 ### **Backend (O Cérebro)**
 
 * FastAPI (Python 3.9)
-* Gemini 1.5 Flash
+* Gemini 2.5 Flash
 * Jinja2
 * WeasyPrint
 * Docker + Render
