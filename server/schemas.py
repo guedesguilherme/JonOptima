@@ -28,9 +28,17 @@ class Skill(BaseModel):
     category: str
     items: List[str]
 
+class Certification(BaseModel):
+    name: str
+    issuer: str
+    date: str
+    url: Optional[str] = None
+
 class ResumeData(BaseModel):
     contact_info: ContactInfo
     summary: str
     education: List[Education]
     experience: List[Experience]
     skills: List[Skill]
+    certifications: List[Certification] = []
+    font_style: str = 'modern'

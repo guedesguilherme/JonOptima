@@ -32,7 +32,9 @@ function App() {
       ],
       skills: [
         { category: '', items: [] }
-      ]
+      ],
+      certifications: [],
+      font_style: 'modern'
     }
   });
 
@@ -46,7 +48,9 @@ function App() {
       skills: data.skills.map(skill => ({
         ...skill,
         items: Array.isArray(skill.items) ? skill.items : skill.items.split(',').map(item => item.trim()).filter(item => item !== '')
-      }))
+      })),
+      certifications: data.certifications || [],
+      font_style: data.font_style || 'modern'
     };
   };
 

@@ -42,6 +42,11 @@ const ResumeForm = ({ register, control, errors, watch, handleSubmit, reset }) =
         name: "skills"
     });
 
+    const { fields: certFields, append: appendCerts, remove: removeCerts } = useFieldArray({
+        control,
+        name: "certifications"
+    });
+
     const handleSave = async (data) => {
         await saveData(data);
         setSaveSuccess(true);
@@ -105,6 +110,49 @@ const ResumeForm = ({ register, control, errors, watch, handleSubmit, reset }) =
                         </motion.button>
                     </div>
                 )}
+            </div>
+
+            {/* Document Style Selector */}
+            <div className={sectionClass}>
+                <h2 className={sectionTitleClass}>Document Style</h2>
+                <Controller
+                    control={control}
+                    name="font_style"
+                    defaultValue="modern"
+                    render={({ field: { onChange, value } }) => (
+                        <div className="grid grid-cols-2 gap-4">
+                            <motion.div
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                                onClick={() => onChange('modern')}
+                                className={`cursor-pointer p-4 rounded-lg border-2 transition-all ${value === 'modern' ? 'bg-teal-500/20 border-teal-500' : 'bg-slate-800 border-slate-700 hover:border-slate-600'}`}
+                            >
+                                <div className="flex items-center gap-3 mb-2">
+                                    <div className={`w-10 h-10 rounded-full flex items-center justify-center text-xl font-bold ${value === 'modern' ? 'bg-teal-500 text-[#0A192F]' : 'bg-slate-700 text-slate-400'}`}>
+                                        <span style={{ fontFamily: 'Arial, sans-serif' }}>Aa</span>
+                                    </div>
+                                    <span className={`font-bold ${value === 'modern' ? 'text-teal-400' : 'text-slate-300'}`}>Sans-Serif (Arial)</span>
+                                </div>
+                                <p className="text-sm text-slate-400">Modern & Clean</p>
+                            </motion.div>
+
+                            <motion.div
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                                onClick={() => onChange('classic')}
+                                className={`cursor-pointer p-4 rounded-lg border-2 transition-all ${value === 'classic' ? 'bg-teal-500/20 border-teal-500' : 'bg-slate-800 border-slate-700 hover:border-slate-600'}`}
+                            >
+                                <div className="flex items-center gap-3 mb-2">
+                                    <div className={`w-10 h-10 rounded-full flex items-center justify-center text-xl font-bold ${value === 'classic' ? 'bg-teal-500 text-[#0A192F]' : 'bg-slate-700 text-slate-400'}`}>
+                                        <span style={{ fontFamily: 'Times New Roman, serif' }}>Aa</span>
+                                    </div>
+                                    <span className={`font-bold ${value === 'classic' ? 'text-teal-400' : 'text-slate-300'}`}>Serif (Times)</span>
+                                </div>
+                                <p className="text-sm text-slate-400">Professional & Traditional</p>
+                            </motion.div>
+                        </div>
+                    )}
+                />
             </div>
 
             {/* Contact Info */}
@@ -274,6 +322,54 @@ const ResumeForm = ({ register, control, errors, watch, handleSubmit, reset }) =
                     className={buttonClass}
                 >
                     <Plus size={18} /> Add Education
+                </motion.button>
+            </div>
+
+            {/* Certifications */}
+            <div className={sectionClass}>
+                <h2 className={sectionTitleClass}>Certifications</h2>
+                <AnimatePresence>
+                    {certFields.map((field, index) => (
+                        <motion.div
+                            key={field.id}
+                            variants={itemVariants}
+                            initial="hidden"
+                            animate="visible"
+                            exit="exit"
+                            className="mb-6 p-4 bg-slate-800/50 rounded border border-slate-700 relative"
+                        >
+                            <button type="button" onClick={() => removeCerts(index)} className={`absolute top-2 right-2 ${deleteButtonClass}`}>
+                                <Trash2 size={18} />
+                            </button>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label className={labelClass}>Certification Name</label>
+                                    <input {...register(`certifications.${index}.name`, { required: true })} className={inputClass} placeholder="AWS Certified Solutions Architect" />
+                                </div>
+                                <div>
+                                    <label className={labelClass}>Issuing Organization</label>
+                                    <input {...register(`certifications.${index}.issuer`, { required: true })} className={inputClass} placeholder="Amazon Web Services" />
+                                </div>
+                                <div>
+                                    <label className={labelClass}>Date Issued</label>
+                                    <input type="month" {...register(`certifications.${index}.date`, { required: true })} className={inputClass} />
+                                </div>
+                                <div>
+                                    <label className={labelClass}>Credential URL (Optional)</label>
+                                    <input {...register(`certifications.${index}.url`)} className={inputClass} placeholder="https://..." />
+                                </div>
+                            </div>
+                        </motion.div>
+                    ))}
+                </AnimatePresence>
+                <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    type="button"
+                    onClick={() => appendCerts({ name: '', issuer: '', date: '', url: '' })}
+                    className={buttonClass}
+                >
+                    <Plus size={18} /> Add Certification
                 </motion.button>
             </div>
 

@@ -11,9 +11,9 @@ app = FastAPI()
 
 origins = [
     "http://localhost:5173",
-    "https://jon-optima.vercel.app",       
-    "https://jon-optima.vercel.app/",      
-    "https://www.jon-optima.vercel.app",   
+#    "https://jon-optima.vercel.app",       
+#    "https://jon-optima.vercel.app/",      
+#    "https://www.jon-optima.vercel.app",   
 ]
 
 app.add_middleware(

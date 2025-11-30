@@ -34,6 +34,7 @@ def tailor_resume(current_data: dict, job_description: str) -> dict:
     1. Tailor the resume to better match the job description.
        - Rewrite the 'summary' to align with the Job Description keywords and tone.
        - Re-order or rewrite the 'experience' description_points to highlight matching keywords and achievements relevant to the job.
+       - Analyze the candidate's list of certifications. Select the top 3-5 that are most relevant to the Job Description. If a certification is highly specific to the role (e.g., AWS Certified for a Cloud role), prioritize it. Discard irrelevant ones.
        - Do NOT invent new experiences or skills, only optimize existing ones.
        - Keep the same structure for 'contact_info', 'education', and 'skills'.
     
