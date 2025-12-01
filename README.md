@@ -10,7 +10,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Framework-FastAPI-009688?logo=fastapi&logoColor=white" />
-  <img src="https://img.shields.io/badge/AI-Gemini%201.5%20Flash-4285F4?logo=google&logoColor=white" />
+  <img src="https://img.shields.io/badge/AI-Gemini%202.5%20Flash-4285F4?logo=google&logoColor=white" />
   <img src="https://img.shields.io/badge/PDF-WeasyPrint-AA0000" />
   <img src="https://img.shields.io/badge/Frontend-React%2018-61DAFB?logo=react&logoColor=black" />
   <img src="https://img.shields.io/badge/Hosting-Vercel-000000?logo=vercel&logoColor=white" />
@@ -66,7 +66,7 @@ Supports Linux dependencies like **Cairo** and **Pango** required for PDF render
 
 ### **Backend (The Brain)**
 - FastAPI (Python 3.9)  
-- Gemini 1.5 Flash  
+- Gemini 2.5 Flash  
 - Jinja2 Templates  
 - WeasyPrint  
 - Docker + Render  
@@ -244,7 +244,7 @@ Inclui dependências como **Cairo** e **Pango** para geração de PDF.
 ### **Backend (O Cérebro)**
 
 * FastAPI (Python 3.9)
-* Gemini 1.5 Flash
+* Gemini 2.5 Flash
 * Jinja2
 * WeasyPrint
 * Docker + Render
