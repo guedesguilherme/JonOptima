@@ -1,369 +1,74 @@
-<!-- ========================================================= -->
-<!-- ===============  JONOPTIMA - README v2  ================== -->
-<!-- ========================================================= -->
+# JonOptima — AI Career Agent
 
-<h1 align="center">⚡ JonOptima — AI Career Architect</h1>
+> Tailors your resume to any job description in real-time using AI.
 
-<p align="center">
-  <strong>Your personal AI agent for creating job-tailored resumes</strong>
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Framework-FastAPI-009688?logo=fastapi&logoColor=white" />
-  <img src="https://img.shields.io/badge/AI-Gemini%202.5%20Flash-4285F4?logo=google&logoColor=white" />
-  <img src="https://img.shields.io/badge/PDF-WeasyPrint-AA0000" />
-  <img src="https://img.shields.io/badge/Frontend-React%2018-61DAFB?logo=react&logoColor=black" />
-  <img src="https://img.shields.io/badge/Hosting-Vercel-000000?logo=vercel&logoColor=white" />
-  <img src="https://img.shields.io/badge/Backend-Docker-2496ED?logo=docker&logoColor=white" />
-</p>
+JonOptima analyzes a job description and rewrites your resume to maximize ATS score and relevance — powered by Google Gemini, built with React and FastAPI.
 
 ---
 
-# 📘 English Version
+## Features
 
-## ⚡ Overview
-
-JonOptima is a **Full-Stack AI Agent** designed to eliminate the “Generic Resume” problem.  
-It acts as a personal career consultant: it ingests a master profile and a Job Description (JD), then rewrites the summary and experience bullet points to strictly align with the target role — **without hallucinating skills**.
-
-Unlike common resume builders that export HTML screenshots, JonOptima uses a **headless browser engine (WeasyPrint)** to generate perfectly typeset, ATS-friendly PDFs.
+- **AI-powered resume tailoring** — matches your experience to the job description language
+- **ATS optimization** — structured output for Applicant Tracking Systems
+- **PDF generation** — download a ready-to-submit PDF via WeasyPrint
+- **Real-time processing** — analysis and rewrite in seconds
 
 ---
 
-## 🚀 Key Features
+## Tech Stack
 
-### 🤖 AI Tailoring  
-Powered by **Google Gemini 2.5 Flash** using a "Strict Editor" architecture to ensure accuracy and JD alignment.
-
-### 📄 ATS-Optimized PDF Engine  
-Server-side PDF rendering using **WeasyPrint + Jinja2**.  
-100% readable by Applicant Tracking Systems.
-
-### 🔐 Persistent User Profiles  
-Firestore + Firebase Auth:  
-Write once → tailor forever.
-
-### 🧠 Smart UI Logic  
-- Auto-save  
-- Skill tags  
-- Present-date toggles  
-- Dynamic forms via React Hook Form
-
-### 🐳 Dockerized Backend  
-Supports Linux dependencies like **Cairo** and **Pango** required for PDF rendering.
+| Layer | Technology |
+|---|---|
+| Frontend | React · JavaScript |
+| Backend | FastAPI · Python |
+| AI | Google Gemini API |
+| PDF | WeasyPrint |
 
 ---
 
-## 🛠 Tech Stack
+## Architecture
 
-### **Frontend (The Face)**
-- React 18 (Vite)  
-- Tailwind CSS  
-- Framer Motion  
-- React Hook Form + Context API  
-- Firebase Auth + Firestore  
-- Deployed on Vercel  
-
-### **Backend (The Brain)**
-- FastAPI (Python 3.9)  
-- Gemini 2.5 Flash  
-- Jinja2 Templates  
-- WeasyPrint  
-- Docker + Render  
-
----
-
-## 🏗 Architecture
-
-1. **User logs in** via Firebase → Firestore sync  
-2. **User pastes job description** → clicks *Tailor*  
-3. **Flow:**
-   - JSON sent to FastAPI  
-   - `ai_agent.py` builds context-aware prompt  
-   - Gemini compares JD × Profile  
-   - Returns optimized JSON + Cover Letter  
-   - `utils.py` injects into HTML  
-   - WeasyPrint → PDF bytes  
-4. **Frontend receives** Base64 PDF + email draft  
-
----
-
-## 💻 Getting Started
-
-### Prerequisites
-- Node.js 18+
-- Python 3.9+
-- Gemini API Key
-- Firebase project
-
----
-
-### 1. Clone Repository
-```bash
-git clone https://github.com/yourusername/jonoptima.git
-cd jonoptima
-````
-
----
-
-### 2. Backend Setup
-
-```bash
-cd server
-python -m venv venv
+```
+User Input (Resume + Job Description)
+        ↓
+  React Frontend
+        ↓
+  FastAPI Backend
+        ↓
+  Gemini API (LLM)
+        ↓
+  Tailored Resume → PDF Output
 ```
 
-Activate:
-Windows:
+---
+
+## Getting Started
 
 ```bash
-.\venv\Scripts\activate
-```
+git clone https://github.com/guedesguilherme/JonOptima.git
 
-Mac/Linux:
-
-```bash
-source venv/bin/activate
-```
-
-Install:
-
-```bash
+# Backend
+cd backend
 pip install -r requirements.txt
-```
-
-Create `.env`:
-
-```
-GEMINI_API_KEY=your_api_key
-```
-
-Run:
-
-```bash
 uvicorn main:app --reload
+
+# Frontend
+cd frontend
+npm install && npm start
+```
+
+```env
+GEMINI_API_KEY=your_key_here
 ```
 
 ---
 
-### 3. Frontend Setup
+## Why I Built This
 
-```bash
-cd client
-npm install
-```
+I wanted to understand how LLMs perform in real document-processing tasks — whether a generative model could reliably extract intent from a job description and map it to a candidate's experience in a useful, consistent way.
 
-Create `.env`:
-
-```
-VITE_API_URL=http://127.0.0.1:8000
-```
-
-Run:
-
-```bash
-npm run dev
-```
+This project taught me how to structure prompts for consistent structured output, how to handle LLM response variability in production code, and how to build a lightweight fullstack AI product end to end.
 
 ---
 
-## 🐳 Docker Deployment
-
-```bash
-cd server
-docker build -t jonoptima-api .
-docker run -p 8000:8000 jonoptima-api
-```
-
----
-
-## 🤝 Contributing
-
-Please follow the **No Hallucination Policy** when modifying the AI agent logic.
-
----
-
-## 📄 License
-
-MIT License.
-
----
-
-# 🇧🇷 Versão em Português (PT-BR)
-
-<h1 align="center">⚡ JonOptima — Arquiteto de Carreira com IA</h1>
-
-## ⚡ Visão Geral
-
-JonOptima é um **Agente de IA Full-Stack** criado para eliminar o problema do “Currículo Genérico”.
-Ele funciona como um consultor de carreira: analisa o seu perfil mestre + a vaga (Job Description) e reescreve o resumo e as experiências **sem inventar habilidades**.
-
-Diferente de construtores de currículo que exportam HTML como imagem, o JonOptima usa **WeasyPrint** para gerar PDFs impecáveis e compatíveis com ATS.
-
----
-
-## 🚀 Principais Funcionalidades
-
-### 🤖 Personalização via IA
-
-Usa **Google Gemini 2.5 Flash** com arquitetura *Strict Editor* para alinhamento preciso com a vaga.
-
-### 📄 PDFs Otimizados para ATS
-
-Renderização server-side com **WeasyPrint + Jinja2** → 100% legível por rastreadores automáticos.
-
-### 🔐 Perfis Persistentes
-
-Com Firebase Auth + Firestore:
-Escreva uma vez → adapte para sempre.
-
-### 🧠 Lógica Inteligente no Front
-
-* Autosave
-* Inputs com tags de habilidades
-* Alternância “até o presente”
-* Forms dinâmicos com React Hook Form
-
-### 🐳 Backend Dockerizado
-
-Inclui dependências como **Cairo** e **Pango** para geração de PDF.
-
----
-
-## 🛠 Tecnologias
-
-### **Frontend (A Face)**
-
-* React 18 (Vite)
-* Tailwind CSS
-* Framer Motion
-* React Hook Form
-* Firebase
-* Hospedado na Vercel
-
-### **Backend (O Cérebro)**
-
-* FastAPI (Python 3.9)
-* Gemini 2.5 Flash
-* Jinja2
-* WeasyPrint
-* Docker + Render
-
----
-
-## 🏗 Arquitetura
-
-1. Usuário faz login (Firebase)
-2. Cole a descrição da vaga → clique em *Tailor*
-3. Pipeline:
-
-   * JSON → FastAPI
-   * `ai_agent.py` cria o prompt
-   * Gemini compara Perfil × Vaga
-   * Retorna JSON otimizado + Carta de Apresentação
-   * `utils.py` injeta em HTML
-   * WeasyPrint → PDF
-4. API retorna PDF em Base64 + rascunho de email
-
----
-
-## 💻 Como Rodar
-
-### Pré-requisitos
-
-* Node.js 18+
-* Python 3.9+
-* Chave Gemini
-* Firebase
-
----
-
-### 1. Clonando o Repositório
-
-```bash
-git clone https://github.com/yourusername/jonoptima.git
-cd jonoptima
-```
-
----
-
-### 2. Configurando o Backend
-
-```bash
-cd server
-python -m venv venv
-```
-
-Ativar:
-Windows:
-
-```bash
-.\venv\Scripts\activate
-```
-
-Linux/Mac:
-
-```bash
-source venv/bin/activate
-```
-
-Instalar:
-
-```bash
-pip install -r requirements.txt
-```
-
-Criar `.env`:
-
-```
-GEMINI_API_KEY=sua_chave
-```
-
-Rodar:
-
-```bash
-uvicorn main:app --reload
-```
-
----
-
-### 3. Configurando o Frontend
-
-```bash
-cd client
-npm install
-```
-
-Criar `.env`:
-
-```
-VITE_API_URL=http://127.0.0.1:8000
-```
-
-Rodar:
-
-```bash
-npm run dev
-```
-
----
-
-## 🐳 Deploy com Docker
-
-```bash
-cd server
-docker build -t jonoptima-api .
-docker run -p 8000:8000 jonoptima-api
-```
-
----
-
-## 🤝 Contribuição
-
-Siga a política de **Zero Alucinação** ao alterar a lógica do agente.
-
----
-
-## 📄 Licença
-
-MIT.
+Built by [Guilherme Guedes](https://github.com/guedesguilherme)
