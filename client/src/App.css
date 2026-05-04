@@ -1,1 +1,6 @@
 /* App.css is intentionally left empty to allow Tailwind classes to control the layout */
+
+@keyframes loadingBar {
+  0%, 100% { height: 10px; opacity: 0.4; }
+  50%       { height: 32px; opacity: 1; }
+}

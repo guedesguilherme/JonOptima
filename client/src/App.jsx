@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import './App.css';
 import ResumeForm from './components/ResumeForm';
 import axios from 'axios';
@@ -13,6 +13,32 @@ function App() {
   const [emailBody, setEmailBody] = useState('');
   const [aiWarning, setAiWarning] = useState(null);
   const step2Ref = useRef(null);
+  const loadingIntervalRef = useRef(null);
+
+  const LOADING_MESSAGES = [
+    'Conectando ao servidor...',
+    'O servidor pode estar acordando do sono... ☕',
+    'Isso pode levar até 30s na primeira vez — calma!',
+    'Analisando palavras-chave da vaga...',
+    'Reescrevendo o resumo com IA...',
+    'Selecionando as experiências mais relevantes...',
+    'Gerando o PDF otimizado...',
+    'Quase lá, promessa! ✨',
+  ];
+  const loadingMsgIndexRef = useRef(0);
+
+  useEffect(() => {
+    if (isLoading) {
+      loadingMsgIndexRef.current = 0;
+      loadingIntervalRef.current = setInterval(() => {
+        loadingMsgIndexRef.current = (loadingMsgIndexRef.current + 1) % LOADING_MESSAGES.length;
+        setLoadingText(LOADING_MESSAGES[loadingMsgIndexRef.current]);
+      }, 3000);
+    } else {
+      clearInterval(loadingIntervalRef.current);
+    }
+    return () => clearInterval(loadingIntervalRef.current);
+  }, [isLoading]);
 
   // Lifted form state
   const { register, control, handleSubmit, watch, reset, formState: { errors }, getValues } = useForm({
@@ -168,7 +194,11 @@ function App() {
             <ResumeForm register={register} control={control} errors={errors} watch={watch} handleSubmit={handleSubmit} reset={reset} />
 
             <div className="max-w-4xl mx-auto px-6 pb-6">
-              <button type="submit" className="w-full bg-slate-700 hover:bg-slate-600 text-white font-bold py-4 px-6 rounded-lg shadow-lg transition-all duration-200 text-lg border border-slate-600">
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="w-full bg-slate-700 hover:bg-slate-600 text-white font-bold py-4 px-6 rounded-lg shadow-lg transition-all duration-200 text-lg border border-slate-600 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-slate-700"
+              >
                 Gerar Pré-visualização
               </button>
             </div>
@@ -193,7 +223,8 @@ function App() {
               <button
                 onClick={handleTailor}
                 type="button"
-                className="w-full bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-400 hover:to-blue-500 text-white font-bold py-4 px-6 rounded-lg shadow-lg transform hover:scale-[1.02] transition-all duration-200 text-lg flex items-center justify-center gap-2"
+                disabled={isLoading}
+                className="w-full bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-400 hover:to-blue-500 text-white font-bold py-4 px-6 rounded-lg shadow-lg transform hover:scale-[1.02] transition-all duration-200 text-lg flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:from-teal-500 disabled:hover:to-blue-600"
               >
                 <Sparkles size={24} />
                 Otimizar com JonOptima AI
@@ -208,9 +239,22 @@ function App() {
           <div className="flex-1 bg-slate-800/50 flex items-center justify-center p-8 overflow-hidden relative">
 
             {isLoading ? (
-              <div className="flex flex-col items-center gap-4">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-400"></div>
-                <p className="text-teal-400 animate-pulse">{loadingText}</p>
+              <div className="flex flex-col items-center gap-6 px-8 text-center">
+                {/* Bouncing dots */}
+                <div className="flex gap-2 items-end h-8">
+                  {[0, 1, 2, 3, 4].map((i) => (
+                    <div
+                      key={i}
+                      className="w-2.5 rounded-full bg-teal-400"
+                      style={{
+                        animation: 'loadingBar 1s ease-in-out infinite',
+                        animationDelay: `${i * 0.12}s`,
+                        height: '10px',
+                      }}
+                    />
+                  ))}
+                </div>
+                <p className="text-teal-400 text-sm font-medium transition-all duration-500">{loadingText}</p>
               </div>
             ) : pdfUrl ? (
               <iframe
