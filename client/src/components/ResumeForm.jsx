@@ -115,6 +115,31 @@ const ResumeForm = ({ register, control, errors, watch, handleSubmit, reset }) =
             {/* Document Style Selector */}
             <div className={sectionClass}>
                 <h2 className={sectionTitleClass}>Estilo do Documento</h2>
+
+                {/* Area Selector */}
+                <div className="mb-4">
+                    <label className={labelClass}>Área de Atuação</label>
+                    <Controller
+                        control={control}
+                        name="area"
+                        defaultValue="tecnologia"
+                        render={({ field: { onChange, value } }) => (
+                            <select
+                                value={value}
+                                onChange={onChange}
+                                className={inputClass}
+                            >
+                                <option value="tecnologia">Tecnologia</option>
+                                <option value="administracao">Administração</option>
+                                <option value="financeiro">Financeiro</option>
+                                <option value="marketing">Marketing</option>
+                                <option value="juridico">Jurídico</option>
+                                <option value="outro">Outro</option>
+                            </select>
+                        )}
+                    />
+                </div>
+
                 <Controller
                     control={control}
                     name="font_style"

@@ -35,7 +35,8 @@ function App() {
       ],
       certifications: [],
       font_style: 'modern',
-      output_language: 'pt-br'
+      output_language: 'pt-br',
+      area: 'tecnologia'
     }
   });
 
@@ -52,7 +53,8 @@ function App() {
       })),
       certifications: data.certifications || [],
       font_style: data.font_style || 'modern',
-      output_language: data.output_language || 'pt-br'
+      output_language: data.output_language || 'pt-br',
+      area: data.area || 'tecnologia'
     };
   };
 

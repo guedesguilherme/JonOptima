@@ -27,6 +27,17 @@ def tailor_resume(current_data: dict, job_description: str) -> dict:
     else:
         language_instruction = "Write ALL text fields (summary, description_points, cover_letter) in English."
 
+    area_instructions = {
+        'tecnologia': "The candidate works in Technology/Software. Prioritize technical achievements, stack proficiency, system scalability, delivery metrics, and engineering impact. Use precise technical language.",
+        'administracao': "The candidate works in Administration/Management. Prioritize leadership, process optimization, team management, operational efficiency, and organizational results. Use corporate, results-oriented language.",
+        'financeiro': "The candidate works in Finance. Prioritize financial metrics, budget management, compliance, cost reduction, investment returns, and analytical rigor. Use precise financial language.",
+        'marketing': "The candidate works in Marketing. Prioritize campaigns, brand growth, ROI, audience metrics, lead generation, and creative strategy. Use dynamic, impact-focused language.",
+        'juridico': "The candidate works in Law/Legal. Prioritize legislation expertise, case outcomes, contracts, compliance, risk management, and legal research. Use formal, precise legal language.",
+        'outro': "Adapt the tone and focus to best match the job description provided. Use professional, clear language.",
+    }
+    area = current_data.get('area', 'tecnologia')
+    area_instruction = area_instructions.get(area, area_instructions['outro'])
+
     prompt = f"""
     You are an Expert Resume Writer and Career Coach.
 
@@ -48,6 +59,8 @@ def tailor_resume(current_data: dict, job_description: str) -> dict:
        - Addressed to the Hiring Manager.
        - Engaging and professional tone.
        - Highlight the top 2 skills from the resume that match the job description.
+
+    AREA CONTEXT: {area_instruction}
 
     LANGUAGE RULE: {language_instruction}
 
