@@ -55,7 +55,7 @@ JonOptima takes your saved profile and a job description, then uses Google Gemin
 | AI | Google Gemini 2.5 Flash |
 | PDF | WeasyPrint, Jinja2 |
 | Auth and Storage | Firebase Auth, Firestore |
-| Deployment | Vercel (frontend), Docker (backend) |
+| Deployment | Vercel (frontend), Docker + Render (backend) |
 
 ---
 
