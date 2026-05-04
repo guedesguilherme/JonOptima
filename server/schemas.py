@@ -42,3 +42,4 @@ class ResumeData(BaseModel):
     skills: List[Skill]
     certifications: List[Certification] = []
     font_style: str = 'modern'
+    output_language: str = 'pt-br'

@@ -149,7 +149,7 @@
     <!-- Summary -->
     {% if data.summary %}
     <div class="section">
-        <h2>Professional Summary</h2>
+        <h2>{{ labels.summary }}</h2>
         <p style="margin: 0;">{{ data.summary }}</p>
     </div>
     {% endif %}
@@ -157,7 +157,7 @@
     <!-- Experience -->
     {% if data.experience %}
     <div class="section">
-        <h2>Experience</h2>
+        <h2>{{ labels.experience }}</h2>
         {% for job in data.experience %}
         <div class="item">
             <div class="row">
@@ -166,7 +166,7 @@
             </div>
             <div class="row">
                 <div class="role">{{ job.role }}</div>
-                <div class="date">{{ job.start_date }} - {{ 'Present' if job.is_current else job.end_date }}</div>
+                <div class="date">{{ job.start_date }} - {{ labels.present if job.is_current else job.end_date }}</div>
             </div>
             <ul>
                 {% for point in job.description_points %}
@@ -181,7 +181,7 @@
     <!-- Education -->
     {% if data.education %}
     <div class="section">
-        <h2>Education</h2>
+        <h2>{{ labels.education }}</h2>
         {% for school in data.education %}
         <div class="item">
             <div class="row">
@@ -206,7 +206,7 @@
     <!-- Certifications -->
     {% if data.certifications %}
     <div class="section">
-        <h2>Certifications</h2>
+        <h2>{{ labels.certifications }}</h2>
         <ul class="cert-list">
             {% for cert in data.certifications %}
             <li class="cert-item">
@@ -225,7 +225,7 @@
     <!-- Skills -->
     {% if data.skills %}
     <div class="section">
-        <h2>Skills</h2>
+        <h2>{{ labels.skills }}</h2>
         <ul class="skills-list">
             {% for skill in data.skills %}
             <li class="skills-item">

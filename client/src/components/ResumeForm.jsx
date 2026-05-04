@@ -74,16 +74,16 @@ const ResumeForm = ({ register, control, errors, watch, handleSubmit, reset }) =
                 {currentUser ? (
                     <div className="flex items-center gap-4 w-full justify-between">
                         <div className="flex items-center gap-2">
-                            <span className="text-teal-400 font-medium">Welcome, {currentUser.displayName}</span>
+                            <span className="text-teal-400 font-medium">Bem-vindo(a), {currentUser.displayName}</span>
                             {isSyncing ? (
                                 <Cloud className="text-yellow-400 animate-pulse" size={20} />
                             ) : dataLoaded ? (
-                                <div className="flex items-center gap-1 text-teal-400" title="Data Synced">
+                                <div className="flex items-center gap-1 text-teal-400" title="Dados sincronizados">
                                     <Cloud size={20} />
                                     <CheckCircle size={14} />
                                 </div>
                             ) : (
-                                <Cloud className="text-slate-500" size={20} title="No Data Synced" />
+                                <Cloud className="text-slate-500" size={20} title="Sem dados sincronizados" />
                             )}
                         </div>
                         <motion.button
@@ -94,19 +94,19 @@ const ResumeForm = ({ register, control, errors, watch, handleSubmit, reset }) =
                             className="flex items-center gap-2 bg-teal-500 hover:bg-teal-400 text-[#0A192F] px-6 py-2 rounded-md font-bold disabled:opacity-50 shadow-md transition-colors"
                         >
                             {saving ? <Loader2 className="animate-spin" size={18} /> : <Save size={18} />}
-                            {saveSuccess ? "Saved!" : "Save Progress"}
+                            {saveSuccess ? "Salvo!" : "Salvar Progresso"}
                         </motion.button>
                     </div>
                 ) : (
                     <div className="flex items-center gap-4 w-full justify-between">
-                        <span className="text-slate-400">Sign in to save your progress</span>
+                        <span className="text-slate-400">Faça login para salvar seu progresso</span>
                         <motion.button
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                             onClick={loginWithGoogle}
                             className="flex items-center gap-2 bg-white text-slate-900 px-4 py-2 rounded font-bold hover:bg-gray-100"
                         >
-                            <LogIn size={18} /> Sign in with Google
+                            <LogIn size={18} /> Entrar com Google
                         </motion.button>
                     </div>
                 )}
@@ -114,7 +114,7 @@ const ResumeForm = ({ register, control, errors, watch, handleSubmit, reset }) =
 
             {/* Document Style Selector */}
             <div className={sectionClass}>
-                <h2 className={sectionTitleClass}>Document Style</h2>
+                <h2 className={sectionTitleClass}>Estilo do Documento</h2>
                 <Controller
                     control={control}
                     name="font_style"
@@ -133,7 +133,7 @@ const ResumeForm = ({ register, control, errors, watch, handleSubmit, reset }) =
                                     </div>
                                     <span className={`font-bold ${value === 'modern' ? 'text-teal-400' : 'text-slate-300'}`}>Sans-Serif (Arial)</span>
                                 </div>
-                                <p className="text-sm text-slate-400">Modern & Clean</p>
+                                <p className="text-sm text-slate-400">Moderno e Limpo</p>
                             </motion.div>
 
                             <motion.div
@@ -148,7 +148,7 @@ const ResumeForm = ({ register, control, errors, watch, handleSubmit, reset }) =
                                     </div>
                                     <span className={`font-bold ${value === 'classic' ? 'text-teal-400' : 'text-slate-300'}`}>Serif (Times)</span>
                                 </div>
-                                <p className="text-sm text-slate-400">Professional & Traditional</p>
+                                <p className="text-sm text-slate-400">Profissional e Tradicional</p>
                             </motion.div>
                         </div>
                     )}
@@ -157,47 +157,47 @@ const ResumeForm = ({ register, control, errors, watch, handleSubmit, reset }) =
 
             {/* Contact Info */}
             <div className={sectionClass}>
-                <h2 className={sectionTitleClass}>Contact Information</h2>
+                <h2 className={sectionTitleClass}>Informações de Contato</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label className={labelClass}>Full Name</label>
-                        <input {...register("contact_info.name", { required: true })} className={inputClass} placeholder="John Doe" />
+                        <label className={labelClass}>Nome Completo</label>
+                        <input {...register("contact_info.name", { required: true })} className={inputClass} placeholder="João Silva" />
                     </div>
                     <div>
-                        <label className={labelClass}>Email</label>
-                        <input {...register("contact_info.email", { required: true })} className={inputClass} placeholder="john@example.com" />
+                        <label className={labelClass}>E-mail</label>
+                        <input {...register("contact_info.email", { required: true })} className={inputClass} placeholder="joao@email.com" />
                     </div>
                     <div>
-                        <label className={labelClass}>Phone</label>
-                        <input {...register("contact_info.phone", { required: true })} className={inputClass} placeholder="+1 234 567 890" />
+                        <label className={labelClass}>Telefone</label>
+                        <input {...register("contact_info.phone", { required: true })} className={inputClass} placeholder="+55 11 99999-9999" />
                     </div>
                     <div>
                         <label className={labelClass}>LinkedIn</label>
-                        <input {...register("contact_info.linkedin")} className={inputClass} placeholder="linkedin.com/in/johndoe" />
+                        <input {...register("contact_info.linkedin")} className={inputClass} placeholder="linkedin.com/in/joaosilva" />
                     </div>
                     <div>
                         <label className={labelClass}>GitHub</label>
-                        <input {...register("contact_info.github")} className={inputClass} placeholder="github.com/johndoe" />
+                        <input {...register("contact_info.github")} className={inputClass} placeholder="github.com/joaosilva" />
                     </div>
                     <div>
-                        <label className={labelClass}>Portfolio URL</label>
-                        <input {...register("contact_info.portfolio_url")} className={inputClass} placeholder="johndoe.com" />
+                        <label className={labelClass}>URL do Portfólio</label>
+                        <input {...register("contact_info.portfolio_url")} className={inputClass} placeholder="joaosilva.com" />
                     </div>
                 </div>
             </div>
 
             {/* Summary */}
             <div className={sectionClass}>
-                <h2 className={sectionTitleClass}>Professional Summary</h2>
+                <h2 className={sectionTitleClass}>Resumo Profissional</h2>
                 <div>
-                    <label className={labelClass}>Summary</label>
-                    <textarea {...register("summary")} className={`${inputClass} h-32`} placeholder="Brief professional summary..." />
+                    <label className={labelClass}>Resumo</label>
+                    <textarea {...register("summary")} className={`${inputClass} h-32`} placeholder="Breve resumo profissional..." />
                 </div>
             </div>
 
             {/* Experience */}
             <div className={sectionClass}>
-                <h2 className={sectionTitleClass}>Experience</h2>
+                <h2 className={sectionTitleClass}>Experiência</h2>
                 <AnimatePresence>
                     {experienceFields.map((field, index) => {
                         const isCurrent = watch(`experience.${index}.is_current`);
@@ -215,21 +215,21 @@ const ResumeForm = ({ register, control, errors, watch, handleSubmit, reset }) =
                                 </button>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                                     <div>
-                                        <label className={labelClass}>Company</label>
+                                        <label className={labelClass}>Empresa</label>
                                         <input {...register(`experience.${index}.company`, { required: true })} className={inputClass} />
                                     </div>
                                     <div>
-                                        <label className={labelClass}>Role</label>
+                                        <label className={labelClass}>Cargo</label>
                                         <input {...register(`experience.${index}.role`, { required: true })} className={inputClass} />
                                     </div>
 
                                     {/* Date Logic */}
                                     <div>
-                                        <label className={labelClass}>Start Date</label>
+                                        <label className={labelClass}>Data de Início</label>
                                         <input type="month" {...register(`experience.${index}.start_date`, { required: true })} className={inputClass} />
                                     </div>
                                     <div>
-                                        <label className={labelClass}>End Date</label>
+                                        <label className={labelClass}>Data de Término</label>
                                         <div className="flex items-center gap-2">
                                             <input
                                                 type="month"
@@ -244,14 +244,14 @@ const ResumeForm = ({ register, control, errors, watch, handleSubmit, reset }) =
                                                     id={`current-${index}`}
                                                     className="w-4 h-4 accent-teal-500"
                                                 />
-                                                <label htmlFor={`current-${index}`} className="text-sm text-slate-300 cursor-pointer select-none">Present</label>
+                                                <label htmlFor={`current-${index}`} className="text-sm text-slate-300 cursor-pointer select-none">Atual</label>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div className="md:col-span-2">
-                                        <label className={labelClass}>Description (One point per line)</label>
-                                        <textarea {...register(`experience.${index}.description_points`)} className={`${inputClass} h-24`} placeholder="- Led team of 5 developers&#10;- Improved performance by 50%" />
+                                        <label className={labelClass}>Descrição (um ponto por linha)</label>
+                                        <textarea {...register(`experience.${index}.description_points`)} className={`${inputClass} h-24`} placeholder="- Liderou equipe de 5 desenvolvedores&#10;- Melhorou a performance em 50%" />
                                     </div>
                                 </div>
                             </motion.div>
@@ -265,13 +265,13 @@ const ResumeForm = ({ register, control, errors, watch, handleSubmit, reset }) =
                     onClick={() => appendExperience({ company: '', role: '', start_date: '', end_date: '', is_current: false, description_points: '' })}
                     className={buttonClass}
                 >
-                    <Plus size={18} /> Add Job
+                    <Plus size={18} /> Adicionar Emprego
                 </motion.button>
             </div>
 
             {/* Education */}
             <div className={sectionClass}>
-                <h2 className={sectionTitleClass}>Education</h2>
+                <h2 className={sectionTitleClass}>Formação Acadêmica</h2>
                 <AnimatePresence>
                     {educationFields.map((field, index) => (
                         <motion.div
@@ -287,27 +287,27 @@ const ResumeForm = ({ register, control, errors, watch, handleSubmit, reset }) =
                             </button>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
-                                    <label className={labelClass}>Institution</label>
+                                    <label className={labelClass}>Instituição</label>
                                     <input {...register(`education.${index}.institution`, { required: true })} className={inputClass} />
                                 </div>
                                 <div>
-                                    <label className={labelClass}>Degree</label>
+                                    <label className={labelClass}>Curso / Grau</label>
                                     <input {...register(`education.${index}.degree`, { required: true })} className={inputClass} />
                                 </div>
                                 <div>
-                                    <label className={labelClass}>Year</label>
+                                    <label className={labelClass}>Ano</label>
                                     <input {...register(`education.${index}.year`, { required: true })} className={inputClass} />
                                 </div>
                                 <div>
-                                    <label className={labelClass}>Details (Optional)</label>
-                                    <input {...register(`education.${index}.details`)} className={inputClass} placeholder="GPA, Honors, etc." />
+                                    <label className={labelClass}>Detalhes (Opcional)</label>
+                                    <input {...register(`education.${index}.details`)} className={inputClass} placeholder="CRA, Honras, etc." />
                                 </div>
                                 <div className="md:col-span-2">
-                                    <label className={labelClass}>Description (Optional)</label>
+                                    <label className={labelClass}>Descrição (Opcional)</label>
                                     <textarea
                                         {...register(`education.${index}.description`)}
                                         className={`${inputClass} h-20 italic`}
-                                        placeholder="e.g., Thesis on AI, Relevant Coursework..."
+                                        placeholder="ex: TCC sobre IA, Disciplinas Relevantes..."
                                     />
                                 </div>
                             </div>
@@ -321,13 +321,13 @@ const ResumeForm = ({ register, control, errors, watch, handleSubmit, reset }) =
                     onClick={() => appendEducation({ institution: '', degree: '', year: '', details: '', description: '' })}
                     className={buttonClass}
                 >
-                    <Plus size={18} /> Add Education
+                    <Plus size={18} /> Adicionar Formação
                 </motion.button>
             </div>
 
             {/* Certifications */}
             <div className={sectionClass}>
-                <h2 className={sectionTitleClass}>Certifications</h2>
+                <h2 className={sectionTitleClass}>Certificações</h2>
                 <AnimatePresence>
                     {certFields.map((field, index) => (
                         <motion.div
@@ -343,19 +343,19 @@ const ResumeForm = ({ register, control, errors, watch, handleSubmit, reset }) =
                             </button>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
-                                    <label className={labelClass}>Certification Name</label>
+                                    <label className={labelClass}>Nome da Certificação</label>
                                     <input {...register(`certifications.${index}.name`, { required: true })} className={inputClass} placeholder="AWS Certified Solutions Architect" />
                                 </div>
                                 <div>
-                                    <label className={labelClass}>Issuing Organization</label>
+                                    <label className={labelClass}>Organização Emissora</label>
                                     <input {...register(`certifications.${index}.issuer`, { required: true })} className={inputClass} placeholder="Amazon Web Services" />
                                 </div>
                                 <div>
-                                    <label className={labelClass}>Date Issued</label>
+                                    <label className={labelClass}>Data de Emissão</label>
                                     <input type="month" {...register(`certifications.${index}.date`, { required: true })} className={inputClass} />
                                 </div>
                                 <div>
-                                    <label className={labelClass}>Credential URL (Optional)</label>
+                                    <label className={labelClass}>URL da Credencial (Opcional)</label>
                                     <input {...register(`certifications.${index}.url`)} className={inputClass} placeholder="https://..." />
                                 </div>
                             </div>
@@ -369,13 +369,13 @@ const ResumeForm = ({ register, control, errors, watch, handleSubmit, reset }) =
                     onClick={() => appendCerts({ name: '', issuer: '', date: '', url: '' })}
                     className={buttonClass}
                 >
-                    <Plus size={18} /> Add Certification
+                    <Plus size={18} /> Adicionar Certificação
                 </motion.button>
             </div>
 
             {/* Skills */}
             <div className={sectionClass}>
-                <h2 className={sectionTitleClass}>Skills</h2>
+                <h2 className={sectionTitleClass}>Habilidades</h2>
                 <AnimatePresence>
                     {skillsFields.map((field, index) => (
                         <motion.div
@@ -391,11 +391,11 @@ const ResumeForm = ({ register, control, errors, watch, handleSubmit, reset }) =
                             </button>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
-                                    <label className={labelClass}>Category</label>
-                                    <input {...register(`skills.${index}.category`, { required: true })} className={inputClass} placeholder="Languages, Frameworks, etc." />
+                                    <label className={labelClass}>Categoria</label>
+                                    <input {...register(`skills.${index}.category`, { required: true })} className={inputClass} placeholder="Linguagens, Frameworks, etc." />
                                 </div>
                                 <div>
-                                    <label className={labelClass}>Items</label>
+                                    <label className={labelClass}>Itens</label>
                                     <Controller
                                         control={control}
                                         name={`skills.${index}.items`}
@@ -431,7 +431,7 @@ const ResumeForm = ({ register, control, errors, watch, handleSubmit, reset }) =
                                                     ))}
                                                     <input
                                                         className="bg-transparent outline-none flex-1 min-w-[100px] text-white"
-                                                        placeholder="Type & press Enter..."
+                                                        placeholder="Digite e pressione Enter..."
                                                         onKeyDown={handleKeyDown}
                                                     />
                                                 </div>
@@ -450,7 +450,7 @@ const ResumeForm = ({ register, control, errors, watch, handleSubmit, reset }) =
                     onClick={() => appendSkills({ category: '', items: [] })}
                     className={buttonClass}
                 >
-                    <Plus size={18} /> Add Skill Category
+                    <Plus size={18} /> Adicionar Categoria
                 </motion.button>
             </div>
 
@@ -465,7 +465,7 @@ const ResumeForm = ({ register, control, errors, watch, handleSubmit, reset }) =
                         className="fixed bottom-8 right-8 bg-teal-500 text-[#0A192F] px-6 py-3 rounded-lg shadow-xl font-bold flex items-center gap-2 z-50"
                     >
                         <Save size={20} />
-                        Saved to Cloud!
+                        Salvo na nuvem!
                     </motion.div>
                 )}
             </AnimatePresence>

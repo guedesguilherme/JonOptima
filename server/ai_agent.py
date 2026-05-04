@@ -21,6 +21,12 @@ def tailor_resume(current_data: dict, job_description: str) -> dict:
     if not model:
         raise RuntimeError("Gemini API key not configured.")
 
+    output_language = current_data.get('output_language', 'pt-br')
+    if output_language == 'pt-br':
+        language_instruction = "Write ALL text fields (summary, description_points, cover_letter) in formal Brazilian Portuguese (PT-BR). Use professional, formal language appropriate for the Brazilian job market."
+    else:
+        language_instruction = "Write ALL text fields (summary, description_points, cover_letter) in English."
+
     prompt = f"""
     You are an Expert Resume Writer and Career Coach.
 
@@ -37,11 +43,13 @@ def tailor_resume(current_data: dict, job_description: str) -> dict:
        - Analyze the candidate's list of certifications. Select the top 3-5 that are most relevant to the Job Description. If a certification is highly specific to the role (e.g., AWS Certified for a Cloud role), prioritize it. Discard irrelevant ones.
        - Do NOT invent new experiences or skills, only optimize existing ones.
        - Keep the same structure for 'contact_info', 'education', and 'skills'.
-    
+
     2. Write a professional Cover Letter (Email Body).
        - Addressed to the Hiring Manager.
        - Engaging and professional tone.
        - Highlight the top 2 skills from the resume that match the job description.
+
+    LANGUAGE RULE: {language_instruction}
 
     CRITICAL: Return ONLY valid JSON with the following structure:
     {{
@@ -52,8 +60,8 @@ def tailor_resume(current_data: dict, job_description: str) -> dict:
     CRITICAL RULES (Violating these causes failure):
     1. **NO HALLUCINATIONS:** You are FORBIDDEN from adding companies, degrees, or hard skills that are not explicitly present in the Candidate Profile.
     2. **Transferable Skills Only:** If the JD asks for a skill the candidate lacks, do NOT add it. Instead, emphasize soft skills or adjacent technologies they *do* have.
-    3. **One Page Limit:** Keep the summary to max 3 lines. Limit job descriptions to the 3 most relevant bullet points per role. Concise is better.    
-    
+    3. **One Page Limit:** Keep the summary to max 3 lines. Limit job descriptions to the 3 most relevant bullet points per role. Concise is better.
+
     Do not include markdown backticks or any other text.
     """
 

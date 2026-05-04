@@ -8,7 +8,7 @@ import { Sparkles, Copy } from 'lucide-react';
 function App() {
   const [pdfUrl, setPdfUrl] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [loadingText, setLoadingText] = useState('Generating PDF...');
+  const [loadingText, setLoadingText] = useState('Gerando PDF...');
   const [jobDescription, setJobDescription] = useState('');
   const [emailBody, setEmailBody] = useState('');
 
@@ -34,7 +34,8 @@ function App() {
         { category: '', items: [] }
       ],
       certifications: [],
-      font_style: 'modern'
+      font_style: 'modern',
+      output_language: 'pt-br'
     }
   });
 
@@ -50,13 +51,14 @@ function App() {
         items: Array.isArray(skill.items) ? skill.items : skill.items.split(',').map(item => item.trim()).filter(item => item !== '')
       })),
       certifications: data.certifications || [],
-      font_style: data.font_style || 'modern'
+      font_style: data.font_style || 'modern',
+      output_language: data.output_language || 'pt-br'
     };
   };
 
   const handleGeneratePreview = async (data) => {
     setIsLoading(true);
-    setLoadingText('Generating Preview...');
+    setLoadingText('Gerando pré-visualização...');
     const processedData = processData(data);
 
     try {
@@ -69,7 +71,7 @@ function App() {
       setPdfUrl(url);
     } catch (error) {
       console.error("Error generating PDF:", error);
-      alert("Failed to generate preview. Please check the backend connection.");
+      alert("Falha ao gerar pré-visualização. Verifique a conexão com o servidor.");
     } finally {
       setIsLoading(false);
     }
@@ -77,12 +79,12 @@ function App() {
 
   const handleTailor = async () => {
     if (!jobDescription.trim()) {
-      alert("Please enter a Job Description to tailor your resume.");
+      alert("Cole a descrição da vaga antes de otimizar.");
       return;
     }
 
     setIsLoading(true);
-    setLoadingText('Analyzing keywords & Rewriting summary...');
+    setLoadingText('Analisando palavras-chave e reescrevendo o resumo...');
 
     // Get current form data
     const currentData = getValues();
@@ -112,7 +114,7 @@ function App() {
       setEmailBody(cover_letter);
     } catch (error) {
       console.error("Error tailoring resume:", error);
-      alert("Failed to tailor resume. Please try again.");
+      alert("Falha ao otimizar o currículo. Tente novamente.");
     } finally {
       setIsLoading(false);
     }
@@ -120,7 +122,7 @@ function App() {
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(emailBody);
-    alert("Email draft copied to clipboard!");
+    alert("Rascunho copiado para a área de transferência!");
   };
 
   return (
@@ -133,7 +135,7 @@ function App() {
             <h1 className="text-3xl font-bold bg-gradient-to-r from-teal-400 to-blue-500 bg-clip-text text-transparent">
               JonOptima Builder
             </h1>
-            <p className="text-slate-400 text-sm mt-1">Craft your professional resume</p>
+            <p className="text-slate-400 text-sm mt-1">Crie seu currículo profissional otimizado</p>
           </header>
 
           <form onSubmit={handleSubmit(handleGeneratePreview)}>
@@ -141,7 +143,7 @@ function App() {
 
             <div className="max-w-4xl mx-auto px-6 pb-6">
               <button type="submit" className="w-full bg-slate-700 hover:bg-slate-600 text-white font-bold py-4 px-6 rounded-lg shadow-lg transition-all duration-200 text-lg border border-slate-600">
-                Generate Standard Preview
+                Gerar Pré-visualização
               </button>
             </div>
           </form>
@@ -151,16 +153,16 @@ function App() {
             <div className="bg-slate-900/80 p-6 rounded-lg border border-teal-500/30 shadow-[0_0_15px_rgba(45,212,191,0.1)]">
               <h2 className="text-xl font-bold text-teal-400 mb-4 flex items-center gap-2">
                 <Sparkles size={20} />
-                Step 2: The Target
+                Passo 2: A Vaga
               </h2>
               <p className="text-slate-400 text-sm mb-4">
-                Paste the job description below. JonOptima AI will rewrite your summary and highlight relevant experience.
+                Cole a descrição da vaga abaixo. O JonOptima AI irá reescrever seu resumo e destacar as experiências mais relevantes.
               </p>
               <textarea
                 value={jobDescription}
                 onChange={(e) => setJobDescription(e.target.value)}
                 className="w-full bg-slate-800 border border-slate-700 text-white rounded p-3 focus:outline-none focus:border-teal-400 transition-colors h-40 mb-4"
-                placeholder="Paste Job Description here..."
+                placeholder="Cole a descrição da vaga aqui..."
               />
               <button
                 onClick={handleTailor}
@@ -168,7 +170,7 @@ function App() {
                 className="w-full bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-400 hover:to-blue-500 text-white font-bold py-4 px-6 rounded-lg shadow-lg transform hover:scale-[1.02] transition-all duration-200 text-lg flex items-center justify-center gap-2"
               >
                 <Sparkles size={24} />
-                Tailor with JonOptima AI
+                Otimizar com JonOptima AI
               </button>
             </div>
           </div>
@@ -193,8 +195,8 @@ function App() {
             ) : (
               <div className="text-center text-slate-500">
                 <div className="mb-4 text-6xl opacity-20">📄</div>
-                <p className="text-lg">Fill the form to see the magic</p>
-                <p className="text-sm opacity-60">Your preview will appear here</p>
+                <p className="text-lg">Preencha o formulário para ver a mágica</p>
+                <p className="text-sm opacity-60">Sua pré-visualização aparecerá aqui</p>
               </div>
             )}
 
@@ -205,13 +207,13 @@ function App() {
             <div className="h-1/3 bg-slate-900 border-t border-slate-700 p-4 overflow-y-auto">
               <div className="flex justify-between items-center mb-2">
                 <h3 className="text-teal-400 font-bold flex items-center gap-2">
-                  <span className="text-xl">✉️</span> Draft Email
+                  <span className="text-xl">✉️</span> Rascunho do E-mail
                 </h3>
                 <button
                   onClick={copyToClipboard}
                   className="text-xs bg-slate-800 hover:bg-slate-700 text-white py-1 px-3 rounded border border-slate-600 flex items-center gap-1 transition-colors"
                 >
-                  <Copy size={14} /> Copy
+                  <Copy size={14} /> Copiar
                 </button>
               </div>
               <textarea
