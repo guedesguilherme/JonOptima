@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useFieldArray, Controller } from 'react-hook-form';
-import { Plus, Trash2, X, Save, LogIn, LogOut, Loader2, Cloud, CheckCircle } from 'lucide-react';
+import { Plus, Trash2, X, Save, LogIn, LogOut, Loader2, Cloud, CheckCircle, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../AuthContext';
 import { useResumeData } from '../hooks/useResumeData';
@@ -46,6 +46,11 @@ const ResumeForm = ({ register, control, errors, watch, handleSubmit, reset }) =
     const [saveSuccess, setSaveSuccess] = useState(false);
     const [dataLoaded, setDataLoaded] = useState(false);
     const [isSyncing, setIsSyncing] = useState(false);
+    const [collapsed, setCollapsed] = useState({
+        contact: false, summary: false, experience: false,
+        education: false, certifications: false, skills: false,
+    });
+    const toggle = (key) => setCollapsed(prev => ({ ...prev, [key]: !prev[key] }));
 
     const area = watch('area') || 'tecnologia';
     const cfg = areaConfig[area] || areaConfig.tecnologia;
@@ -79,7 +84,20 @@ const ResumeForm = ({ register, control, errors, watch, handleSubmit, reset }) =
     const inputClass = 'w-full bg-[#112240] border border-slate-600 focus:border-teal-400 focus:ring-1 focus:ring-teal-400 text-slate-200 rounded-md p-2 transition-colors';
     const labelClass = 'block text-sm font-medium text-slate-300 mb-1';
     const sectionClass = 'bg-[#112240]/50 p-6 rounded-xl border border-slate-700/50 mb-6 shadow-lg backdrop-blur-sm';
-    const sectionTitleClass = 'text-xl font-bold text-teal-400 mb-4 border-b border-slate-700 pb-2';
+    const sectionTitleClass = 'text-xl font-bold text-teal-400 border-b border-slate-700 pb-2';
+    const SectionTitle = ({ sectionKey, children }) => (
+        <button
+            type="button"
+            onClick={() => toggle(sectionKey)}
+            className={`${sectionTitleClass} w-full flex items-center justify-between mb-4 hover:text-teal-300 transition-colors`}
+        >
+            <span>{children}</span>
+            <ChevronDown
+                size={18}
+                className={`transition-transform duration-200 ${collapsed[sectionKey] ? '-rotate-90' : ''}`}
+            />
+        </button>
+    );
     const buttonClass = 'flex items-center gap-2 text-sm text-teal-400 hover:text-teal-300 transition-colors mt-2 font-medium';
     const deleteButtonClass = 'text-red-400 hover:text-red-300 transition-colors p-2';
 
@@ -223,7 +241,10 @@ const ResumeForm = ({ register, control, errors, watch, handleSubmit, reset }) =
 
             {/* Contact Info */}
             <div className={sectionClass}>
-                <h2 className={sectionTitleClass}>Informações de Contato</h2>
+                <SectionTitle sectionKey="contact">Informações de Contato</SectionTitle>
+                <AnimatePresence initial={false}>
+                {!collapsed.contact && (
+                <motion.div key="contact" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} style={{ overflow: 'hidden' }}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label className={labelClass}>Nome Completo</label>
@@ -252,24 +273,34 @@ const ResumeForm = ({ register, control, errors, watch, handleSubmit, reset }) =
                         <input {...register('contact_info.portfolio_url')} className={inputClass} placeholder="joaosilva.com" />
                     </div>
                 </div>
+                </motion.div>
+                )}
+                </AnimatePresence>
             </div>
 
             {/* Summary */}
             <div className={sectionClass}>
-                <h2 className={sectionTitleClass}>Resumo Profissional</h2>
-                <div>
+                <SectionTitle sectionKey="summary">Resumo Profissional</SectionTitle>
+                <AnimatePresence initial={false}>
+                {!collapsed.summary && (
+                <motion.div key="summary" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} style={{ overflow: 'hidden' }}>
                     <label className={labelClass}>Resumo</label>
                     <textarea
                         {...register('summary')}
                         className={`${inputClass} h-32`}
                         placeholder={cfg.summaryPlaceholder}
                     />
-                </div>
+                </motion.div>
+                )}
+                </AnimatePresence>
             </div>
 
             {/* Experience */}
             <div className={sectionClass}>
-                <h2 className={sectionTitleClass}>Experiência</h2>
+                <SectionTitle sectionKey="experience">Experiência</SectionTitle>
+                <AnimatePresence initial={false}>
+                {!collapsed.experience && (
+                <motion.div key="experience-wrap" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} style={{ overflow: 'hidden' }}>
                 <AnimatePresence>
                     {experienceFields.map((field, index) => {
                         const isCurrent = watch(`experience.${index}.is_current`);
@@ -336,11 +367,17 @@ const ResumeForm = ({ register, control, errors, watch, handleSubmit, reset }) =
                 >
                     <Plus size={18} /> Adicionar Emprego
                 </motion.button>
+                </motion.div>
+                )}
+                </AnimatePresence>
             </div>
 
             {/* Education */}
             <div className={sectionClass}>
-                <h2 className={sectionTitleClass}>Formação Acadêmica</h2>
+                <SectionTitle sectionKey="education">Formação Acadêmica</SectionTitle>
+                <AnimatePresence initial={false}>
+                {!collapsed.education && (
+                <motion.div key="education-wrap" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} style={{ overflow: 'hidden' }}>
                 <AnimatePresence>
                     {educationFields.map((field, index) => (
                         <motion.div
@@ -388,11 +425,17 @@ const ResumeForm = ({ register, control, errors, watch, handleSubmit, reset }) =
                 >
                     <Plus size={18} /> Adicionar Formação
                 </motion.button>
+                </motion.div>
+                )}
+                </AnimatePresence>
             </div>
 
             {/* Certifications */}
             <div className={sectionClass}>
-                <h2 className={sectionTitleClass}>Certificações</h2>
+                <SectionTitle sectionKey="certifications">Certificações</SectionTitle>
+                <AnimatePresence initial={false}>
+                {!collapsed.certifications && (
+                <motion.div key="cert-wrap" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} style={{ overflow: 'hidden' }}>
                 <AnimatePresence>
                     {certFields.map((field, index) => (
                         <motion.div
@@ -432,11 +475,17 @@ const ResumeForm = ({ register, control, errors, watch, handleSubmit, reset }) =
                 >
                     <Plus size={18} /> Adicionar Certificação
                 </motion.button>
+                </motion.div>
+                )}
+                </AnimatePresence>
             </div>
 
             {/* Skills */}
             <div className={sectionClass}>
-                <h2 className={sectionTitleClass}>Habilidades</h2>
+                <SectionTitle sectionKey="skills">Habilidades</SectionTitle>
+                <AnimatePresence initial={false}>
+                {!collapsed.skills && (
+                <motion.div key="skills-wrap" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} style={{ overflow: 'hidden' }}>
                 {cfg.skillsSuggestion && (
                     <p className="text-xs text-slate-500 mb-4">{cfg.skillsSuggestion}</p>
                 )}
@@ -517,6 +566,9 @@ const ResumeForm = ({ register, control, errors, watch, handleSubmit, reset }) =
                 >
                     <Plus size={18} /> Adicionar Categoria
                 </motion.button>
+                </motion.div>
+                )}
+                </AnimatePresence>
             </div>
 
             {/* Toast Notification */}
