@@ -3,7 +3,7 @@ import './App.css';
 import ResumeForm from './components/ResumeForm';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
-import { Sparkles, Copy } from 'lucide-react';
+import { Sparkles, Copy, AlertTriangle, X } from 'lucide-react';
 
 function App() {
   const [pdfUrl, setPdfUrl] = useState(null);
@@ -11,6 +11,7 @@ function App() {
   const [loadingText, setLoadingText] = useState('Gerando PDF...');
   const [jobDescription, setJobDescription] = useState('');
   const [emailBody, setEmailBody] = useState('');
+  const [aiWarning, setAiWarning] = useState(null);
 
   // Lifted form state
   const { register, control, handleSubmit, watch, reset, formState: { errors }, getValues } = useForm({
@@ -100,7 +101,8 @@ function App() {
       });
 
       // Handle JSON response
-      const { pdf_base64, cover_letter } = response.data;
+      const { pdf_base64, cover_letter, ai_error } = response.data;
+      if (ai_error) setAiWarning(ai_error);
 
       // Convert Base64 to Blob
       const byteCharacters = atob(pdf_base64);
@@ -139,6 +141,17 @@ function App() {
             </h1>
             <p className="text-slate-400 text-sm mt-1">Crie seu currículo profissional otimizado</p>
           </header>
+
+          {/* AI Warning Banner */}
+          {aiWarning && (
+            <div className="mb-4 flex items-start gap-3 bg-yellow-500/10 border border-yellow-500/30 text-yellow-300 rounded-lg px-4 py-3 text-sm">
+              <AlertTriangle size={16} className="mt-0.5 shrink-0" />
+              <span className="flex-1">{aiWarning}</span>
+              <button onClick={() => setAiWarning(null)} className="hover:text-yellow-100 shrink-0">
+                <X size={16} />
+              </button>
+            </div>
+          )}
 
           <form onSubmit={handleSubmit(handleGeneratePreview)}>
             <ResumeForm register={register} control={control} errors={errors} watch={watch} handleSubmit={handleSubmit} reset={reset} />

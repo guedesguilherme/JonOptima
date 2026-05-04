@@ -71,5 +71,6 @@ def tailor_cv(request: TailorRequest):
     
     return {
         "pdf_base64": pdf_base64,
-        "cover_letter": cover_letter
+        "cover_letter": cover_letter,
+        "ai_error": tailored_result.get("ai_error"),
     }
