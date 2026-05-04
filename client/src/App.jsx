@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import './App.css';
 import ResumeForm from './components/ResumeForm';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
-import { Sparkles, Copy, AlertTriangle, X } from 'lucide-react';
+import { Sparkles, Copy, AlertTriangle, X, ChevronDown } from 'lucide-react';
 
 function App() {
   const [pdfUrl, setPdfUrl] = useState(null);
@@ -12,6 +12,7 @@ function App() {
   const [jobDescription, setJobDescription] = useState('');
   const [emailBody, setEmailBody] = useState('');
   const [aiWarning, setAiWarning] = useState(null);
+  const step2Ref = useRef(null);
 
   // Lifted form state
   const { register, control, handleSubmit, watch, reset, formState: { errors }, getValues } = useForm({
@@ -135,11 +136,21 @@ function App() {
 
         {/* Left Side: Form (Scrollable) */}
         <div className="h-full overflow-y-auto p-6 border-r border-slate-800 scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-slate-900">
-          <header className="mb-8">
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-teal-400 to-blue-500 bg-clip-text text-transparent">
-              JonOptima Builder
-            </h1>
-            <p className="text-slate-400 text-sm mt-1">Crie seu currículo profissional otimizado</p>
+          <header className="mb-8 flex items-start justify-between">
+            <div>
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-teal-400 to-blue-500 bg-clip-text text-transparent">
+                JonOptima Builder
+              </h1>
+              <p className="text-slate-400 text-sm mt-1">Crie seu currículo profissional otimizado</p>
+            </div>
+            <button
+              onClick={() => step2Ref.current?.scrollIntoView({ behavior: 'smooth' })}
+              className="flex items-center gap-1.5 text-xs text-teal-400 hover:text-teal-300 border border-teal-500/30 hover:border-teal-400/50 bg-teal-500/5 hover:bg-teal-500/10 px-3 py-1.5 rounded-full transition-all mt-1 shrink-0"
+            >
+              <Sparkles size={12} />
+              Ir para a vaga
+              <ChevronDown size={12} />
+            </button>
           </header>
 
           {/* AI Warning Banner */}
@@ -164,7 +175,7 @@ function App() {
           </form>
 
           {/* Step 2: The Target */}
-          <div className="max-w-4xl mx-auto px-6 pb-12 mt-8">
+          <div ref={step2Ref} className="max-w-4xl mx-auto px-6 pb-12 mt-8">
             <div className="bg-slate-900/80 p-6 rounded-lg border border-teal-500/30 shadow-[0_0_15px_rgba(45,212,191,0.1)]">
               <h2 className="text-xl font-bold text-teal-400 mb-4 flex items-center gap-2">
                 <Sparkles size={20} />

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useFieldArray, Controller } from 'react-hook-form';
-import { Plus, Trash2, X, Save, LogIn, Loader2, Cloud, CheckCircle } from 'lucide-react';
+import { Plus, Trash2, X, Save, LogIn, LogOut, Loader2, Cloud, CheckCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../AuthContext';
 import { useResumeData } from '../hooks/useResumeData';
@@ -41,7 +41,7 @@ const AREAS = [
 ];
 
 const ResumeForm = ({ register, control, errors, watch, handleSubmit, reset }) => {
-    const { currentUser, loginWithGoogle } = useAuth();
+    const { currentUser, loginWithGoogle, logout } = useAuth();
     const { saveData, loadData, loading: saving } = useResumeData();
     const [saveSuccess, setSaveSuccess] = useState(false);
     const [dataLoaded, setDataLoaded] = useState(false);
@@ -108,15 +108,25 @@ const ResumeForm = ({ register, control, errors, watch, handleSubmit, reset }) =
                                 <Cloud className="text-slate-500" size={20} title="Sem dados sincronizados" />
                             )}
                         </div>
-                        <motion.button
-                            whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-                            onClick={handleSubmit(handleSave)}
-                            disabled={saving}
-                            className="flex items-center gap-2 bg-teal-500 hover:bg-teal-400 text-[#0A192F] px-6 py-2 rounded-md font-bold disabled:opacity-50 shadow-md transition-colors"
-                        >
-                            {saving ? <Loader2 className="animate-spin" size={18} /> : <Save size={18} />}
-                            {saveSuccess ? 'Salvo!' : 'Salvar Progresso'}
-                        </motion.button>
+                        <div className="flex items-center gap-2">
+                            <motion.button
+                                whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+                                onClick={handleSubmit(handleSave)}
+                                disabled={saving}
+                                className="flex items-center gap-2 bg-teal-500 hover:bg-teal-400 text-[#0A192F] px-6 py-2 rounded-md font-bold disabled:opacity-50 shadow-md transition-colors"
+                            >
+                                {saving ? <Loader2 className="animate-spin" size={18} /> : <Save size={18} />}
+                                {saveSuccess ? 'Salvo!' : 'Salvar Progresso'}
+                            </motion.button>
+                            <motion.button
+                                whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+                                onClick={logout}
+                                title="Sair"
+                                className="flex items-center gap-1.5 text-slate-400 hover:text-red-400 border border-slate-600 hover:border-red-400/50 px-3 py-2 rounded-md transition-colors text-sm"
+                            >
+                                <LogOut size={16} /> Sair
+                            </motion.button>
+                        </div>
                     </div>
                 ) : (
                     <div className="flex items-center gap-4 w-full justify-between">
